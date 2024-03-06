@@ -1,0 +1,7 @@
+package-lock.json
+babel.config.js
+tsconfig.json
+
+node_modules
+assets
+.expo
