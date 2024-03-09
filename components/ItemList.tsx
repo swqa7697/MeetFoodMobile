@@ -1,21 +1,15 @@
 import { FlatList } from 'react-native';
 import { useEffect, useState } from 'react';
+import { useAtom } from 'jotai';
 import axios from 'axios';
 import FontAwesome from '@expo/vector-icons/Ionicons';
 import { ItemCard } from './ItemCard';
-import { BASE_URL } from '../utils';
-
-interface VideoPostItem {
-  _id: string;
-  countLike: number;
-  postTitle: string;
-  videoUrl: string;
-  coverImageUrl: string;
-  restaurantName: string;
-}
+import { BASE_URL } from '../util/devUtils';
+import { VideoPostItem } from '../util/types';
+import { videoItemListAtom } from '../util/atom';
 
 export const ItemList = () => {
-  const [videoPosts, setVideoPosts] = useState<VideoPostItem[]>([]);
+  const [videoPosts, setVideoPosts] = useAtom(videoItemListAtom);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -37,9 +31,9 @@ export const ItemList = () => {
   return (
     <FlatList
       data={videoPosts}
-      renderItem={({ item, index }) => (
+      renderItem={({ item }) => (
         <ItemCard
-          key={index}
+          key={item._id}
           id={item._id}
           imgSource={item.coverImageUrl}
           dishTitle={item.postTitle}

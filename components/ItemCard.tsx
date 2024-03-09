@@ -1,6 +1,7 @@
-import { Image, Text, View, StyleSheet } from 'react-native';
+import { Image, Text, View, StyleSheet, Pressable } from 'react-native';
 import { FC } from 'react';
 import { useNavigation } from 'expo-router';
+import { ScreenNavigationProps } from '../util/types';
 
 interface ItemCardProps {
   id: string;
@@ -15,12 +16,12 @@ export const ItemCard: FC<ItemCardProps> = ({
   dishTitle,
   restaurantName,
 }) => {
-  const navigation = useNavigation<any>();
+  const navigation = useNavigation<ScreenNavigationProps>();
 
   return (
     <View style={styles.container}>
-      <View
-        onTouchEnd={() => {
+      <Pressable
+        onPress={() => {
           navigation.navigate('video/[id]', { id: id });
         }}
       >
@@ -31,7 +32,7 @@ export const ItemCard: FC<ItemCardProps> = ({
           height={240}
           style={styles.img}
         />
-      </View>
+      </Pressable>
       <View style={styles.textContainer}>
         <Text style={styles.dishTitle}>{dishTitle}</Text>
         <Text style={styles.restaurantName}>{restaurantName}</Text>
