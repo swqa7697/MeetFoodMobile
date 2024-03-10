@@ -99,7 +99,7 @@ export const VideoPlayer: FC<VideoPlayerProps> = ({
         />
       </View>
       <View style={{ ...styles.controlContainer, left: insets.left }}>
-        <FontAwesome.Button
+        <FontAwesome
           name="arrow-back"
           size={26}
           backgroundColor="transparent"
