@@ -1,8 +1,11 @@
 import { Authenticator, useAuthenticator } from '@aws-amplify/ui-react-native';
 import { AuthenticatorRoute } from '@aws-amplify/ui';
 import { FC, ReactNode, useEffect, useState } from 'react';
+import { useSetAtom } from 'jotai';
 import axios from 'axios';
 import { BASE_URL } from '../util/devUtils';
+import { colors } from '../util/constants';
+import { isCreateContentScreenAuthedAtom } from '../util/atoms';
 
 interface AuthScreenProps {
   children: ReactNode;
@@ -14,10 +17,11 @@ export const AuthScreen: FC<AuthScreenProps> = ({ children }) => {
   const { route } = useAuthenticator((context) => [context.route]);
   const { user } = useAuthenticator((context) => [context.user]);
   const [prevRoute, setPrevRoute] = useState<AuthenticatorRoute>('idle');
+  const setIsAuthAtom = useSetAtom(isCreateContentScreenAuthedAtom);
 
   useEffect(() => {
     // Sign Up Completed
-    if (route === 'transition' && prevRoute === 'confirmSignUp') {
+    if (route === 'authenticated' && prevRoute === 'transition') {
       const accessToken = user
         ?.getSignInUserSession()
         ?.getAccessToken()
@@ -35,6 +39,13 @@ export const AuthScreen: FC<AuthScreenProps> = ({ children }) => {
       );
     }
 
+    // Toggle isAuth atom used for other components
+    if (route === 'authenticated') {
+      setIsAuthAtom(true);
+    } else {
+      setIsAuthAtom(false);
+    }
+
     // Track route status
     setPrevRoute(route);
   }, [route]);
@@ -44,7 +55,7 @@ export const AuthScreen: FC<AuthScreenProps> = ({ children }) => {
       Container={(props) => (
         <Authenticator.Container
           {...props}
-          style={{ backgroundColor: '#f6f6f6' }}
+          style={{ backgroundColor: colors.defaultBg }}
         />
       )}
       components={{

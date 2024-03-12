@@ -3,8 +3,7 @@ import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Video, ResizeMode, AVPlaybackStatusSuccess } from 'expo-av';
 import { useNavigation } from 'expo-router';
-import FontAwesome from '@expo/vector-icons/Ionicons';
-import { ScreenNavigationProps } from '../util/types';
+import Ionicons from '@expo/vector-icons/Ionicons';
 
 interface VideoPlayerProps {
   videoUrl: string;
@@ -27,7 +26,7 @@ export const VideoPlayer: FC<VideoPlayerProps> = ({
 }) => {
   const video = useRef<Video>(null);
   const [status, setStatus] = useState<Partial<AVPlaybackStatusSuccess>>({});
-  const navigation = useNavigation<ScreenNavigationProps>();
+  const navigation = useNavigation();
   const insets = useSafeAreaInsets();
 
   const toggleVideoPlay = () => {
@@ -48,12 +47,12 @@ export const VideoPlayer: FC<VideoPlayerProps> = ({
         ref={video}
         style={styles.video}
         source={{ uri: videoUrl }}
-        resizeMode={ResizeMode.COVER}
+        resizeMode={ResizeMode.CONTAIN}
         useNativeControls={false}
         isLooping
         usePoster={true}
         posterSource={{ uri: posterUrl }}
-        posterStyle={{ height: videoHeight, resizeMode: 'cover' }}
+        posterStyle={{ height: videoHeight, resizeMode: 'contain' }}
         onPlaybackStatusUpdate={(status) => {
           if (status.isLoaded) {
             setStatus(status);
@@ -64,7 +63,7 @@ export const VideoPlayer: FC<VideoPlayerProps> = ({
         style={{ ...styles.controlContainer, ...styles.playButtonContainer }}
       >
         {status.isPlaying ? null : (
-          <FontAwesome
+          <Ionicons
             name="play-circle"
             size={80}
             color="rgba(0, 0, 0, 0.65)"
@@ -99,14 +98,13 @@ export const VideoPlayer: FC<VideoPlayerProps> = ({
         />
       </View>
       <View style={{ ...styles.controlContainer, left: insets.left }}>
-        <FontAwesome
+        <Ionicons
           name="arrow-back"
           size={26}
-          backgroundColor="transparent"
           color="rgba(120, 120, 120, 0.9)"
           style={{ padding: 20 }}
           onPress={() => {
-            navigation.navigate('index');
+            navigation.goBack();
             video.current?.pauseAsync();
           }}
         />

@@ -3,7 +3,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { FC, useState } from 'react';
 import { useAtomValue } from 'jotai';
 import { VideoPlayer } from './VideoPlayer';
-import { videoItemListAtom } from '../util/atom';
+import { videoItemListAtom } from '../util/atoms';
 
 interface VideoListProps {
   currVideoId: string;
@@ -54,7 +54,7 @@ export const VideoList: FC<VideoListProps> = ({ currVideoId }) => {
           <Image
             source={{ uri: item.coverImageUrl }}
             height={videoHeight}
-            resizeMode="cover"
+            resizeMode="contain"
           />
         );
       }}

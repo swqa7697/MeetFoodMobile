@@ -1,5 +1,5 @@
 import { Platform } from 'react-native';
-import backendConfig from '../config/config.json';
+import { back_end_url, port, isTest } from '../config/config.json';
 
 // Only used for dev testing
 const getLocalBaseUrl = () => {
@@ -8,6 +8,8 @@ const getLocalBaseUrl = () => {
     : 'http://localhost:3000';
 };
 
-export const LOCAL_BASE_URL = getLocalBaseUrl();
+const getBaseUrl = () => {
+  return `http://${back_end_url}:${port}`;
+};
 
-export const BASE_URL = `http://${backendConfig.back_end_url}:${backendConfig.port}`;
+export const BASE_URL = isTest ? getLocalBaseUrl() : getBaseUrl();

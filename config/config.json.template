@@ -1,4 +1,5 @@
 {
-  "back_end_url": "",
-  "port": 3000
+  "back_end_url": string,
+  "port": number,
+  "isTest": boolean
 }

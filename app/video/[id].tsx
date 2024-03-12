@@ -1,5 +1,6 @@
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { StatusBar } from 'expo-status-bar';
 import { useLocalSearchParams } from 'expo-router';
 import { VideoList } from '../../components/VideoList';
 
@@ -8,6 +9,7 @@ export default function App() {
 
   return (
     <SafeAreaView style={styles.container}>
+      <StatusBar style="light" />
       <VideoList currVideoId={id as string} />
     </SafeAreaView>
   );
@@ -16,7 +18,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f6f6f6',
+    backgroundColor: '#000',
     alignItems: 'center',
     justifyContent: 'center',
   },

@@ -17,3 +17,10 @@ export interface VideoPostItem {
   coverImageUrl: string;
   restaurantName: string;
 }
+
+export enum CreateContentStep {
+  record,
+  review,
+  publish,
+  success,
+}
